@@ -1,30 +1,43 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{payload["meta"]["title_zh"]}</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>财务分析（可读版）</title>
 <style>
-:root{--bg:#f3f6fa;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#dbe3ee;--a:#0ea5e9;--b:#0369a1}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-.top{position:sticky;top:0;background:#ffffffd9;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;z-index:10}
-.btns{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:10px;cursor:pointer}.btn.on{border-color:var(--a);color:var(--a)}
-.wrap{width:min(1200px,96%);margin:14px auto 40px}
-.hero{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--line);border-radius:16px;padding:20px}
-.h1{font-size:34px;font-weight:900}.sub{margin-top:8px;color:var(--muted)}
-.cards{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.v{font-size:30px;font-weight:900;color:var(--b)}.l{font-size:12px;color:var(--muted);margin-top:6px}
-.sec{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-.sec h2{margin:0 0 10px 0;font-size:20px}
-.table{width:100%;border-collapse:collapse} .table th,.table td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums} .table th:first-child,.table td:first-child{text-align:left}
-.note{font-size:13px;color:#334155;line-height:1.65;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:10px}
-.cn{display:block} .ru{display:block} body[data-lang='cn'] .ru{display:none} body[data-lang='ru'] .cn{display:none}
-@media (max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.cards{grid-template-columns:1fr} .h1{font-size:26px}}
+:root{--bg:#f6f8fc;--card:#fff;--ink:#0b1220;--muted:#5f6f86;--line:#d6deea;--pri:#0f7ae5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Segoe UI,Arial,sans-serif;line-height:1.55}
+.top{position:sticky;top:0;z-index:20;background:#ffffffe8;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.title{font-size:20px;font-weight:800}.btns{display:flex;gap:8px}
+.btn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:10px;font-size:15px;cursor:pointer}.btn.on{border-color:var(--pri);color:var(--pri);font-weight:700}
+.wrap{width:min(1220px,96%);margin:16px auto 42px}
+.hero{background:linear-gradient(180deg,#fff,#f9fbff);border:1px solid var(--line);border-radius:16px;padding:22px}
+.h1{font-size:38px;font-weight:900;line-height:1.15;margin:0}.sub{margin-top:10px;font-size:18px;color:var(--muted)}
+.cards{margin-top:14px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.val{font-size:34px;font-weight:900;color:var(--pri);line-height:1}.lab{margin-top:8px;font-size:15px;color:var(--muted)}
+.sec{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+.sec h2{margin:0 0 12px 0;font-size:26px}
+.tableWrap{overflow:auto}
+.table{width:100%;border-collapse:collapse;min-width:860px}
+.table th,.table td{border-bottom:1px solid var(--line);padding:12px 10px;font-size:17px;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.table th{background:#f8fbff;position:sticky;top:0;z-index:1;font-weight:800}
+.table td:first-child,.table th:first-child{text-align:left}
+.table tr:nth-child(even){background:#fcfdff}
+.blank{color:#9fb0c8}
+.note{font-size:17px;background:#f8fbff;border:1px dashed #c9d4e6;padding:12px;border-radius:12px}
+.cn,.ru{display:block}
+body[data-lang='cn'] .ru{display:none} body[data-lang='ru'] .cn{display:none}
+@media (max-width:980px){.h1{font-size:30px}.sub{font-size:16px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.val{font-size:30px}.table th,.table td{font-size:16px}}
+@media (max-width:640px){.cards{grid-template-columns:1fr}.top{padding:10px}.btn{font-size:14px;padding:7px 9px}.h1{font-size:26px}}
 </style>
 </head>
 <body data-lang="both">
 <div class="top">
-  <div><strong class="cn">财务分析报告</strong><strong class="ru">Финансовый отчет</strong></div>
+  <div>
+    <div class="title cn">财务分析（计划口径）</div>
+    <div class="title ru">Финансовый анализ (плановый контур)</div>
+  </div>
   <div class="btns">
     <button class="btn on" data-lang="both">中俄</button>
     <button class="btn" data-lang="cn">中文</button>
@@ -33,68 +46,60 @@
 </div>
 <div class="wrap">
   <section class="hero">
-    <div class="h1 cn">{payload['meta']['title_zh']}</div>
-    <div class="h1 ru">{payload['meta']['title_ru']}</div>
-    <div class="sub cn">{payload['meta']['sub_zh']}</div>
-    <div class="sub ru">{payload['meta']['sub_ru']}</div>
+    <h1 class="h1 cn">财务分析（可读版）</h1>
+    <h1 class="h1 ru">Финансовый анализ (читаемая версия)</h1>
+    <div class="sub cn">无实际值的字段已保留为空白，不按0计算</div>
+    <div class="sub ru">Поля без фактических данных оставлены пустыми, не считаются как 0</div>
     <div class="cards" id="cards"></div>
   </section>
 
   <section class="sec">
-    <h2 class="cn">月度计划与实际（实际缺失留空）</h2>
-    <h2 class="ru">План и факт по месяцам (при отсутствии факта — пусто)</h2>
-    <table class="table" id="tbl">
-      <thead>
-        <tr>
-          <th class="cn">月份</th><th class="ru">Месяц</th>
-          <th class="cn">计划营收</th><th class="ru">План выручки</th>
-          <th class="cn">实际营收</th><th class="ru">Факт выручки</th>
-          <th class="cn">计划净利润</th><th class="ru">План чистой прибыли</th>
-          <th class="cn">实际净利润</th><th class="ru">Факт чистой прибыли</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <h2 class="cn">月度计划/实际（空值保留）</h2>
+    <h2 class="ru">Месячный план/факт (пустые значения сохранены)</h2>
+    <div class="tableWrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><span class="cn">月份</span><span class="ru">Месяц</span></th>
+            <th><span class="cn">计划营收</span><span class="ru">План выручки</span></th>
+            <th><span class="cn">实际营收</span><span class="ru">Факт выручки</span></th>
+            <th><span class="cn">计划净利润</span><span class="ru">План чистой прибыли</span></th>
+            <th><span class="cn">实际净利润</span><span class="ru">Факт чистой прибыли</span></th>
+          </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
   </section>
 
   <section class="sec">
-    <h2 class="cn">调价摘要（用于管理层判断）</h2>
-    <h2 class="ru">Сводка по повышению цен (для управленческого решения)</h2>
+    <h2 class="cn">调价摘要</h2>
+    <h2 class="ru">Сводка повышения цен</h2>
     <div class="note">
-      <div class="cn">北京饭平均调价幅度：<b>{payload['price_summary']['beijing_food_avg_pct']}%</b>；
-      ЧУЧУ茶大诺平均调价：<b>{payload['price_summary']['chuchu_vg_avg_pct']}%</b>；
-      其他城市平均调价：<b>{payload['price_summary']['chuchu_other_avg_pct']}%</b>。</div>
-      <div class="ru">Среднее повышение цены Beijing Fan: <b>{payload['price_summary']['beijing_food_avg_pct']}%</b>;
-      ЧУЧУ Чай (Великий Новгород): <b>{payload['price_summary']['chuchu_vg_avg_pct']}%</b>;
-      прочие города: <b>{payload['price_summary']['chuchu_other_avg_pct']}%</b>.</div>
+      <div class="cn">北京饭平均调价 <b>2.39%</b>；ЧУЧУ茶大诺平均调价 <b>9.43%</b>；其他城市平均调价 <b>9.63%</b>。</div>
+      <div class="ru">Среднее повышение Beijing Fan: <b>2.39%</b>; ЧУЧУ Чай (Великий Новгород): <b>9.43%</b>; другие города: <b>9.63%</b>.</div>
     </div>
   </section>
 </div>
 <script>
-const payload = {"meta": {"title_zh": "财务分析（计划口径）", "title_ru": "Финансовый анализ (плановый контур)", "sub_zh": "规则：实际值缺失时留空，不按0计入", "sub_ru": "Правило: при отсутствии факта поле оставляется пустым, не считается как 0"}, "cards": [{"label_zh": "年度计划营收", "label_ru": "Плановая выручка за год", "value": 111619838.0}, {"label_zh": "年度计划净利润", "label_ru": "Плановая чистая прибыль за год", "value": 16428653.81}, {"label_zh": "年度计划净利率", "label_ru": "Плановая чистая маржа", "value": 14.72, "suffix": "%"}, {"label_zh": "月度实际填报率", "label_ru": "Заполненность факта по месяцам", "value": 0, "suffix": "%"}], "price_summary": {"beijing_food_avg_pct": 2.39, "chuchu_vg_avg_pct": 9.43, "chuchu_other_avg_pct": 9.63}, "rows": [{"month_ru": "январь", "month_zh": "1月", "plan_revenue": 6058915.0, "fact_revenue": null, "plan_profit": 339679.86, "fact_profit": -67700.0}, {"month_ru": "февраль", "month_zh": "2月", "plan_revenue": 5924285.0, "fact_revenue": null, "plan_profit": 298664.05, "fact_profit": -67700.0}, {"month_ru": "март", "month_zh": "3月", "plan_revenue": 8985298.0, "fact_revenue": null, "plan_profit": 1302142.03, "fact_profit": -67700.0}, {"month_ru": "апрель", "month_zh": "4月", "plan_revenue": 9825149.0, "fact_revenue": null, "plan_profit": 1403762.88, "fact_profit": -67700.0}, {"month_ru": "май", "month_zh": "5月", "plan_revenue": 12183849.0, "fact_revenue": null, "plan_profit": 2450935.54, "fact_profit": -67700.0}, {"month_ru": "июнь", "month_zh": "6月", "plan_revenue": 12644331.0, "fact_revenue": null, "plan_profit": 2478873.04, "fact_profit": -67700.0}, {"month_ru": "июль", "month_zh": "7月", "plan_revenue": 13746676.0, "fact_revenue": null, "plan_profit": 2908378.95, "fact_profit": -67700.0}, {"month_ru": "август", "month_zh": "8月", "plan_revenue": 12378923.0, "fact_revenue": null, "plan_profit": 2241688.66, "fact_profit": -67700.0}, {"month_ru": "сентябрь", "month_zh": "9月", "plan_revenue": 8588204.0, "fact_revenue": null, "plan_profit": 1215025.98, "fact_profit": -67700.0}, {"month_ru": "октябрь", "month_zh": "10月", "plan_revenue": 7490094.0, "fact_revenue": null, "plan_profit": 724472.33, "fact_profit": -67700.0}, {"month_ru": "ноябрь", "month_zh": "11月", "plan_revenue": 7254552.0, "fact_revenue": null, "plan_profit": 687116.49, "fact_profit": -67700.0}, {"month_ru": "декабрь", "month_zh": "12月", "plan_revenue": 6539562.0, "fact_revenue": null, "plan_profit": 377914.0, "fact_profit": -67700.0}]};
-const f = (n,s='') => (n===null||n===undefined||n==='') ? '' : (Number(n).toLocaleString('en-US',{maximumFractionDigits:2})+s);
-const cards = document.getElementById('cards');
+const payload={"cards": [{"zh": "年度计划营收", "ru": "Плановая выручка за год", "value": 111619838.0, "suffix": ""}, {"zh": "年度计划净利润", "ru": "Плановая чистая прибыль за год", "value": 16428653.81, "suffix": ""}, {"zh": "年度计划净利率", "ru": "Плановая чистая маржа", "value": 14.72, "suffix": "%"}, {"zh": "实际填报率", "ru": "Заполненность факта", "value": 0.0, "suffix": "%"}], "rows": [{"month_zh": "1月", "month_ru": "январь", "plan_revenue": 6058915.0, "fact_revenue": null, "plan_profit": 339679.86, "fact_profit": null}, {"month_zh": "2月", "month_ru": "февраль", "plan_revenue": 5924285.0, "fact_revenue": null, "plan_profit": 298664.05, "fact_profit": null}, {"month_zh": "3月", "month_ru": "март", "plan_revenue": 8985298.0, "fact_revenue": null, "plan_profit": 1302142.03, "fact_profit": null}, {"month_zh": "4月", "month_ru": "апрель", "plan_revenue": 9825149.0, "fact_revenue": null, "plan_profit": 1403762.88, "fact_profit": null}, {"month_zh": "5月", "month_ru": "май", "plan_revenue": 12183849.0, "fact_revenue": null, "plan_profit": 2450935.54, "fact_profit": null}, {"month_zh": "6月", "month_ru": "июнь", "plan_revenue": 12644331.0, "fact_revenue": null, "plan_profit": 2478873.04, "fact_profit": null}, {"month_zh": "7月", "month_ru": "июль", "plan_revenue": 13746676.0, "fact_revenue": null, "plan_profit": 2908378.95, "fact_profit": null}, {"month_zh": "8月", "month_ru": "август", "plan_revenue": 12378923.0, "fact_revenue": null, "plan_profit": 2241688.66, "fact_profit": null}, {"month_zh": "9月", "month_ru": "сентябрь", "plan_revenue": 8588204.0, "fact_revenue": null, "plan_profit": 1215025.98, "fact_profit": null}, {"month_zh": "10月", "month_ru": "октябрь", "plan_revenue": 7490094.0, "fact_revenue": null, "plan_profit": 724472.33, "fact_profit": null}, {"month_zh": "11月", "month_ru": "ноябрь", "plan_revenue": 7254552.0, "fact_revenue": null, "plan_profit": 687116.49, "fact_profit": null}, {"month_zh": "12月", "month_ru": "декабрь", "plan_revenue": 6539562.0, "fact_revenue": null, "plan_profit": 377914.0, "fact_profit": null}], "price": {"bj": 2.39, "vg": 9.43, "other": 9.63}};
+const fmt=(x,s='')=> (x===null||x===undefined||x==='') ? '' : Number(x).toLocaleString('en-US',{maximumFractionDigits:2})+s;
+const cards=document.getElementById('cards');
 payload.cards.forEach(c=>{
   const d=document.createElement('div'); d.className='card';
-  d.innerHTML=`<div class="v">${f(c.value,c.suffix||'')}</div><div class="l cn">${c.label_zh}</div><div class="l ru">${c.label_ru}</div>`;
+  d.innerHTML=`<div class="val">${fmt(c.value,c.suffix||'')}</div><div class="lab cn">${c.zh}</div><div class="lab ru">${c.ru}</div>`;
   cards.appendChild(d);
 });
-const tb=document.querySelector('#tbl tbody');
+const tb=document.getElementById('tb');
 payload.rows.forEach(r=>{
+  const m=`<span class="cn">${r.month_zh}</span><span class="ru">${r.month_ru}</span>`;
+  const blank='—';
+  const fr = r.fact_revenue===null? `<span class="blank">${blank}</span>` : fmt(r.fact_revenue);
+  const fp = r.fact_profit===null? `<span class="blank">${blank}</span>` : fmt(r.fact_profit);
   const tr=document.createElement('tr');
-  tr.innerHTML=`
-    <td class="cn">${r.month_zh}</td><td class="ru">${r.month_ru}</td>
-    <td>${f(r.plan_revenue)}</td><td>${f(r.plan_revenue)}</td>
-    <td>${f(r.fact_revenue)}</td><td>${f(r.fact_revenue)}</td>
-    <td>${f(r.plan_profit)}</td><td>${f(r.plan_profit)}</td>
-    <td>${f(r.fact_profit)}</td><td>${f(r.fact_profit)}</td>`;
+  tr.innerHTML=`<td>${m}</td><td>${fmt(r.plan_revenue)}</td><td>${fr}</td><td>${fmt(r.plan_profit)}</td><td>${fp}</td>`;
   tb.appendChild(tr);
 });
-
-document.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{
-  document.body.dataset.lang=b.dataset.lang;
-  document.querySelectorAll('.btn').forEach(x=>x.classList.remove('on'));
-  b.classList.add('on');
-});
+document.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{document.body.dataset.lang=b.dataset.lang;document.querySelectorAll('.btn').forEach(x=>x.classList.remove('on'));b.classList.add('on');});
 </script>
 </body></html>
