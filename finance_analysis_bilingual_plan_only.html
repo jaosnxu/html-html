@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{payload["meta"]["title_zh"]}</title>
+<style>
+:root{--bg:#f3f6fa;--card:#fff;--ink:#0f172a;--muted:#64748b;--line:#dbe3ee;--a:#0ea5e9;--b:#0369a1}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+.top{position:sticky;top:0;background:#ffffffd9;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;z-index:10}
+.btns{display:flex;gap:8px}.btn{border:1px solid var(--line);background:#fff;padding:6px 10px;border-radius:10px;cursor:pointer}.btn.on{border-color:var(--a);color:var(--a)}
+.wrap{width:min(1200px,96%);margin:14px auto 40px}
+.hero{background:linear-gradient(180deg,#fff,#f8fbff);border:1px solid var(--line);border-radius:16px;padding:20px}
+.h1{font-size:34px;font-weight:900}.sub{margin-top:8px;color:var(--muted)}
+.cards{margin-top:12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}.v{font-size:30px;font-weight:900;color:var(--b)}.l{font-size:12px;color:var(--muted);margin-top:6px}
+.sec{margin-top:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.sec h2{margin:0 0 10px 0;font-size:20px}
+.table{width:100%;border-collapse:collapse} .table th,.table td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums} .table th:first-child,.table td:first-child{text-align:left}
+.note{font-size:13px;color:#334155;line-height:1.65;background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:10px}
+.cn{display:block} .ru{display:block} body[data-lang='cn'] .ru{display:none} body[data-lang='ru'] .cn{display:none}
+@media (max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.cards{grid-template-columns:1fr} .h1{font-size:26px}}
+</style>
+</head>
+<body data-lang="both">
+<div class="top">
+  <div><strong class="cn">财务分析报告</strong><strong class="ru">Финансовый отчет</strong></div>
+  <div class="btns">
+    <button class="btn on" data-lang="both">中俄</button>
+    <button class="btn" data-lang="cn">中文</button>
+    <button class="btn" data-lang="ru">Русский</button>
+  </div>
+</div>
+<div class="wrap">
+  <section class="hero">
+    <div class="h1 cn">{payload['meta']['title_zh']}</div>
+    <div class="h1 ru">{payload['meta']['title_ru']}</div>
+    <div class="sub cn">{payload['meta']['sub_zh']}</div>
+    <div class="sub ru">{payload['meta']['sub_ru']}</div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="cn">月度计划与实际（实际缺失留空）</h2>
+    <h2 class="ru">План и факт по месяцам (при отсутствии факта — пусто)</h2>
+    <table class="table" id="tbl">
+      <thead>
+        <tr>
+          <th class="cn">月份</th><th class="ru">Месяц</th>
+          <th class="cn">计划营收</th><th class="ru">План выручки</th>
+          <th class="cn">实际营收</th><th class="ru">Факт выручки</th>
+          <th class="cn">计划净利润</th><th class="ru">План чистой прибыли</th>
+          <th class="cn">实际净利润</th><th class="ru">Факт чистой прибыли</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section class="sec">
+    <h2 class="cn">调价摘要（用于管理层判断）</h2>
+    <h2 class="ru">Сводка по повышению цен (для управленческого решения)</h2>
+    <div class="note">
+      <div class="cn">北京饭平均调价幅度：<b>{payload['price_summary']['beijing_food_avg_pct']}%</b>；
+      ЧУЧУ茶大诺平均调价：<b>{payload['price_summary']['chuchu_vg_avg_pct']}%</b>；
+      其他城市平均调价：<b>{payload['price_summary']['chuchu_other_avg_pct']}%</b>。</div>
+      <div class="ru">Среднее повышение цены Beijing Fan: <b>{payload['price_summary']['beijing_food_avg_pct']}%</b>;
+      ЧУЧУ Чай (Великий Новгород): <b>{payload['price_summary']['chuchu_vg_avg_pct']}%</b>;
+      прочие города: <b>{payload['price_summary']['chuchu_other_avg_pct']}%</b>.</div>
+    </div>
+  </section>
+</div>
+<script>
+const payload = {"meta": {"title_zh": "财务分析（计划口径）", "title_ru": "Финансовый анализ (плановый контур)", "sub_zh": "规则：实际值缺失时留空，不按0计入", "sub_ru": "Правило: при отсутствии факта поле оставляется пустым, не считается как 0"}, "cards": [{"label_zh": "年度计划营收", "label_ru": "Плановая выручка за год", "value": 111619838.0}, {"label_zh": "年度计划净利润", "label_ru": "Плановая чистая прибыль за год", "value": 16428653.81}, {"label_zh": "年度计划净利率", "label_ru": "Плановая чистая маржа", "value": 14.72, "suffix": "%"}, {"label_zh": "月度实际填报率", "label_ru": "Заполненность факта по месяцам", "value": 0, "suffix": "%"}], "price_summary": {"beijing_food_avg_pct": 2.39, "chuchu_vg_avg_pct": 9.43, "chuchu_other_avg_pct": 9.63}, "rows": [{"month_ru": "январь", "month_zh": "1月", "plan_revenue": 6058915.0, "fact_revenue": null, "plan_profit": 339679.86, "fact_profit": -67700.0}, {"month_ru": "февраль", "month_zh": "2月", "plan_revenue": 5924285.0, "fact_revenue": null, "plan_profit": 298664.05, "fact_profit": -67700.0}, {"month_ru": "март", "month_zh": "3月", "plan_revenue": 8985298.0, "fact_revenue": null, "plan_profit": 1302142.03, "fact_profit": -67700.0}, {"month_ru": "апрель", "month_zh": "4月", "plan_revenue": 9825149.0, "fact_revenue": null, "plan_profit": 1403762.88, "fact_profit": -67700.0}, {"month_ru": "май", "month_zh": "5月", "plan_revenue": 12183849.0, "fact_revenue": null, "plan_profit": 2450935.54, "fact_profit": -67700.0}, {"month_ru": "июнь", "month_zh": "6月", "plan_revenue": 12644331.0, "fact_revenue": null, "plan_profit": 2478873.04, "fact_profit": -67700.0}, {"month_ru": "июль", "month_zh": "7月", "plan_revenue": 13746676.0, "fact_revenue": null, "plan_profit": 2908378.95, "fact_profit": -67700.0}, {"month_ru": "август", "month_zh": "8月", "plan_revenue": 12378923.0, "fact_revenue": null, "plan_profit": 2241688.66, "fact_profit": -67700.0}, {"month_ru": "сентябрь", "month_zh": "9月", "plan_revenue": 8588204.0, "fact_revenue": null, "plan_profit": 1215025.98, "fact_profit": -67700.0}, {"month_ru": "октябрь", "month_zh": "10月", "plan_revenue": 7490094.0, "fact_revenue": null, "plan_profit": 724472.33, "fact_profit": -67700.0}, {"month_ru": "ноябрь", "month_zh": "11月", "plan_revenue": 7254552.0, "fact_revenue": null, "plan_profit": 687116.49, "fact_profit": -67700.0}, {"month_ru": "декабрь", "month_zh": "12月", "plan_revenue": 6539562.0, "fact_revenue": null, "plan_profit": 377914.0, "fact_profit": -67700.0}]};
+const f = (n,s='') => (n===null||n===undefined||n==='') ? '' : (Number(n).toLocaleString('en-US',{maximumFractionDigits:2})+s);
+const cards = document.getElementById('cards');
+payload.cards.forEach(c=>{
+  const d=document.createElement('div'); d.className='card';
+  d.innerHTML=`<div class="v">${f(c.value,c.suffix||'')}</div><div class="l cn">${c.label_zh}</div><div class="l ru">${c.label_ru}</div>`;
+  cards.appendChild(d);
+});
+const tb=document.querySelector('#tbl tbody');
+payload.rows.forEach(r=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`
+    <td class="cn">${r.month_zh}</td><td class="ru">${r.month_ru}</td>
+    <td>${f(r.plan_revenue)}</td><td>${f(r.plan_revenue)}</td>
+    <td>${f(r.fact_revenue)}</td><td>${f(r.fact_revenue)}</td>
+    <td>${f(r.plan_profit)}</td><td>${f(r.plan_profit)}</td>
+    <td>${f(r.fact_profit)}</td><td>${f(r.fact_profit)}</td>`;
+  tb.appendChild(tr);
+});
+
+document.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{
+  document.body.dataset.lang=b.dataset.lang;
+  document.querySelectorAll('.btn').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+});
+</script>
+</body></html>
