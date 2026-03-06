@@ -19,9 +19,12 @@
       margin: 0;
       background: linear-gradient(140deg, #eef2f7 0%, #f7fafc 46%, #e9f2ef 100%);
       color: var(--ink);
-      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
       line-height: 1.58;
     }
+    body[data-mode="zh"] { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif; font-size: 16px; }
+    body[data-mode="ru"] { font-family: "Noto Sans", "Segoe UI", "Roboto", "Arial", sans-serif; font-size: 16px; }
+    body[data-mode="bi"] { font-family: "PingFang SC", "Noto Sans", "Segoe UI", sans-serif; font-size: 15px; }
     .wrap { max-width: 1300px; margin: 0 auto; padding: 24px 16px 50px; }
     .top {
       background: var(--paper);
@@ -67,8 +70,8 @@
       background: #f9fbfd;
     }
     .lang { display: none; }
-    .lang ul { margin: 0; padding-left: 20px; }
-    .lang li { margin: 6px 0; }
+    .lang ul { margin: 0; padding-left: 22px; }
+    .lang li { margin: 8px 0; }
     .summary {
       margin-top: 10px;
       padding: 10px 12px;
@@ -80,7 +83,7 @@
       margin-top: 12px;
       border: 1px dashed var(--line);
       border-radius: 12px;
-      padding: 10px;
+      padding: 14px;
       background: #fcfefe;
       overflow-x: auto;
     }
@@ -95,6 +98,7 @@
     .path { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     .node { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 13px; background: #fff; }
     footer { margin-top: 22px; text-align: center; color: var(--muted); font-size: 12px; }
+    body[data-mode="ru"] .diagram svg text { display: none; }
     @media (min-width: 980px) { .bilingual-block { grid-template-columns: 1fr 1fr; } }
     @media print {
       body { background: #fff; }
@@ -104,7 +108,7 @@
     }
   </style>
 </head>
-<body>
+<body data-mode="zh">
   <div class="wrap">
     <header class="top">
       <h1>连锁经营会议战略纲要（完整版）</h1>
@@ -545,12 +549,97 @@
     (function () {
       const buttons = Array.from(document.querySelectorAll('.lang-switch button'));
       const blocks = Array.from(document.querySelectorAll('.lang'));
+      const pageTitle = document.querySelector('.top h1');
+      const pageSub = document.querySelector('.top .sub');
+      const pageFooter = document.querySelector('footer');
+      const secTags = Array.from(document.querySelectorAll('.section .tag'));
+      const secTitles = Array.from(document.querySelectorAll('.section h2'));
+
+      const sectionTitles = {
+        zh: [
+          '餐饮的本质：复购闭环图',
+          '分钱体系：文化与利益双轮驱动',
+          '可复制体系与模型验证',
+          '财务体系：生存、激励、分红三阶段',
+          '人力体系：荣誉、温暖、成长平台',
+          '人才循环体系：完整闭环晋升图',
+          '全俄罗斯扩张：必须解决人才复制问题',
+          '监督体系：三线并行与评分机制',
+          '营销：开业爆店与归因机制',
+          '价格带与竞争体系',
+          '品牌长期主义：融入生活场景'
+        ],
+        ru: [
+          'Сущность общепита: контур повторной покупки',
+          'Система распределения: культура и интересы',
+          'Тиражируемая система и валидация форматов',
+          'Финансы: выживание, мотивация, дивиденды',
+          'HR-система: признание, тепло, рост',
+          'Кадровый цикл: замкнутый контур развития',
+          'Масштабирование по РФ: кадры для репликации',
+          'Контроль: три линии и система оценки',
+          'Маркетинг: взрывное открытие и атрибуция',
+          'Ценовой диапазон и конкуренция',
+          'Бренд в долгую: интеграция в повседневность'
+        ],
+        bi: [
+          '餐饮的本质：复购闭环图 / Сущность общепита: контур повторной покупки',
+          '分钱体系：文化与利益双轮驱动 / Система распределения: культура и интересы',
+          '可复制体系与模型验证 / Тиражируемая система и валидация форматов',
+          '财务体系：生存、激励、分红三阶段 / Финансы: выживание, мотивация, дивиденды',
+          '人力体系：荣誉、温暖、成长平台 / HR-система: признание, тепло, рост',
+          '人才循环体系：完整闭环晋升图 / Кадровый цикл: замкнутый контур развития',
+          '全俄罗斯扩张：必须解决人才复制问题 / Масштабирование по РФ: кадры для репликации',
+          '监督体系：三线并行与评分机制 / Контроль: три линии и система оценки',
+          '营销：开业爆店与归因机制 / Маркетинг: взрывное открытие и атрибуция',
+          '价格带与竞争体系 / Ценовой диапазон и конкуренция',
+          '品牌长期主义：融入生活场景 / Бренд в долгую: интеграция в повседневность'
+        ]
+      };
+
+      function setStaticText(lang) {
+        const mode = lang === 'ru' ? 'ru' : (lang === 'bi' ? 'bi' : 'zh');
+        document.body.setAttribute('data-mode', mode);
+        document.documentElement.lang = mode === 'ru' ? 'ru' : 'zh-CN';
+
+        if (mode === 'ru') {
+          pageTitle.textContent = 'Стратегический план сети (полная версия)';
+          pageSub.textContent = 'Дата: 2026-03-06 | Режим: Китайский / Русский / Сравнение';
+          pageFooter.textContent = 'HTML для совещания (полная версия CN/RU/сравнение) | Обновлено: 2026-03-06';
+          buttons[0].textContent = 'Китайский';
+          buttons[1].textContent = 'Русский';
+          buttons[2].textContent = 'Сравнение';
+        } else if (mode === 'bi') {
+          pageTitle.textContent = '连锁经营会议战略纲要 / Стратегический план сети';
+          pageSub.textContent = '会议日期 / Дата: 2026-03-06 | 模式 / Режим: 中文 / Русский / 中俄对照';
+          pageFooter.textContent = '会议版 HTML / HTML для совещания（中俄对照）| 更新 / Обновлено: 2026-03-06';
+          buttons[0].textContent = '中文';
+          buttons[1].textContent = 'Русский';
+          buttons[2].textContent = '中俄对照';
+        } else {
+          pageTitle.textContent = '连锁经营会议战略纲要（完整版）';
+          pageSub.textContent = '会议日期：2026-03-06 | 语言：中文 / Русский / 中俄文完整对照';
+          pageFooter.textContent = '会议版 HTML（完整中/俄/中俄对照）| 更新日期：2026-03-06';
+          buttons[0].textContent = '中文';
+          buttons[1].textContent = 'Русский';
+          buttons[2].textContent = '中俄对照';
+        }
+
+        secTags.forEach((el, idx) => {
+          if (mode === 'ru') el.textContent = `Тема ${idx + 1}`;
+          else if (mode === 'bi') el.textContent = `主题 ${idx + 1} / Тема ${idx + 1}`;
+          else el.textContent = `主题 ${idx + 1}`;
+        });
+        secTitles.forEach((el, idx) => {
+          el.textContent = sectionTitles[mode][idx] || el.textContent;
+        });
+      }
       function setLang(lang) {
         buttons.forEach((b) => b.classList.toggle('active', b.dataset.lang === lang));
         blocks.forEach((el) => {
           el.style.display = el.classList.contains('lang-' + lang) ? 'block' : 'none';
         });
-        document.documentElement.lang = lang === 'ru' ? 'ru' : 'zh-CN';
+        setStaticText(lang);
       }
       buttons.forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
       setLang('zh');
