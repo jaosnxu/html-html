@@ -79,14 +79,6 @@
       background: #f7fcfb;
       font-weight: 600;
     }
-    .diagram {
-      margin-top: 12px;
-      border: 1px dashed var(--line);
-      border-radius: 12px;
-      padding: 14px;
-      background: #fcfefe;
-      overflow-x: auto;
-    }
     .bilingual-block { display: grid; grid-template-columns: 1fr; gap: 10px; }
     .bi-card {
       border: 1px solid var(--line);
@@ -98,10 +90,6 @@
     .path { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
     .node { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 13px; background: #fff; }
     footer { margin-top: 22px; text-align: center; color: var(--muted); font-size: 12px; }
-    .svg-zh, .svg-ru { display: none; }
-    body[data-mode="zh"] .svg-zh { display: inline; }
-    body[data-mode="ru"] .svg-ru { display: inline; }
-    body[data-mode="bi"] .svg-zh, body[data-mode="bi"] .svg-ru { display: inline; }
     @media (min-width: 980px) { .bilingual-block { grid-template-columns: 1fr 1fr; } }
     @media print {
       body { background: #fff; }
@@ -170,41 +158,14 @@
           </div>
         </div>
       </div>
-      <div class="diagram">
-        <svg viewBox="0 0 980 360" width="100%" aria-label="复购闭环圈图">
-          <defs>
-            <style>
-              .t { font: 15px sans-serif; fill: #17212b; }
-              .c1 { fill: #dff3f0; stroke: #0a6a5f; stroke-width: 2; }
-              .c2 { fill: #edf8f6; stroke: #0a6a5f; stroke-width: 2; }
-              .c3 { fill: #f5fcfb; stroke: #0a6a5f; stroke-width: 2; }
-              .c4 { fill: #ffffff; stroke: #0a6a5f; stroke-width: 2; }
-              .note { font: 13px sans-serif; fill: #425161; }
-            </style>
-          </defs>
-          <circle cx="490" cy="180" r="160" class="c4" />
-          <circle cx="490" cy="180" r="125" class="c3" />
-          <circle cx="490" cy="180" r="90" class="c2" />
-          <circle cx="490" cy="180" r="55" class="c1" />
-
-          <text x="475" y="185" class="t svg-zh">好吃</text>
-          <text x="460" y="185" class="t svg-ru">Вкус</text>
-          <text x="468" y="95" class="t svg-zh">标准</text>
-          <text x="454" y="95" class="t svg-ru">Стандарт</text>
-          <text x="424" y="58" class="t svg-zh">监控 + 流程体系化</text>
-          <text x="340" y="58" class="t svg-ru">Контроль + Системные процессы</text>
-          <text x="466" y="24" class="t svg-zh">复购（闭环目标）</text>
-          <text x="370" y="24" class="t svg-ru">Повторная покупка (цель цикла)</text>
-
-          <text x="170" y="70" class="note svg-zh">圈1（中心）：好吃</text>
-          <text x="170" y="70" class="note svg-ru">Круг 1 (центр): Вкус</text>
-          <text x="170" y="95" class="note svg-zh">圈2：标准</text>
-          <text x="170" y="95" class="note svg-ru">Круг 2: Стандарт</text>
-          <text x="170" y="120" class="note svg-zh">圈3：监控与流程体系化</text>
-          <text x="170" y="120" class="note svg-ru">Круг 3: Контроль и процессы</text>
-          <text x="170" y="145" class="note svg-zh">圈4（外圈）：复购闭环</text>
-          <text x="170" y="145" class="note svg-ru">Круг 4 (внешний): Цикл повторных покупок</text>
-        </svg>
+      <div class="lang lang-zh">
+        <div class="summary">闭环文字描述：监控与流程体系化 -> 标准一致 -> 稳定好吃 -> 复购提升 -> 现金流与数据反馈 -> 继续优化监控与流程。</div>
+      </div>
+      <div class="lang lang-ru">
+        <div class="summary">Текстовый контур: контроль и процессы -> единый стандарт -> стабильный вкус -> рост повторных покупок -> cashflow и обратная связь -> дальнейшая оптимизация контроля и процессов.</div>
+      </div>
+      <div class="lang lang-bi">
+        <div class="summary">闭环文字描述 / Текстовый контур：监控与流程体系化 -> 标准一致 -> 稳定好吃 -> 复购提升 -> 数据反馈优化。</div>
       </div>
     </section>
 
@@ -355,63 +316,14 @@
           <div class="bi-card"><h3>Русский</h3><ul><li>Закрытый путь: от стажёра до регионального партнёра.</li><li>На каждом уровне фиксируются критерии.</li><li>Финал — самостоятельное предпринимательство.</li><li>Доход и ответственность связаны.</li></ul></div>
         </div>
       </div>
-      <div class="diagram">
-        <svg viewBox="0 0 1100 360" width="100%" aria-label="人才循环闭环图">
-          <defs>
-            <style>
-              .n { fill: #fff; stroke: #0a6a5f; stroke-width: 2; }
-              .l { fill: none; stroke: #0a6a5f; stroke-width: 2.6; marker-end: url(#arrow2); }
-              .tx { font: 13px sans-serif; fill: #17212b; }
-              .title { font: 14px sans-serif; fill: #17212b; }
-            </style>
-            <marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-              <path d="M0,0 L0,6 L9,3 z" fill="#0a6a5f"></path>
-            </marker>
-          </defs>
-          <rect x="30" y="120" width="110" height="50" rx="10" class="n"></rect>
-          <text x="70" y="150" class="tx svg-zh">实习</text>
-          <text x="62" y="150" class="tx svg-ru">Стажёр</text>
-
-          <rect x="165" y="120" width="110" height="50" rx="10" class="n"></rect>
-          <text x="199" y="150" class="tx svg-zh">咖啡师</text>
-          <text x="192" y="150" class="tx svg-ru">Бариста</text>
-
-          <rect x="300" y="120" width="130" height="50" rx="10" class="n"></rect>
-          <text x="327" y="150" class="tx svg-zh">副店长</text>
-          <text x="318" y="150" class="tx svg-ru">Зам. управляющего</text>
-
-          <rect x="455" y="120" width="110" height="50" rx="10" class="n"></rect>
-          <text x="492" y="150" class="tx svg-zh">店主</text>
-          <text x="476" y="150" class="tx svg-ru">Управляющий</text>
-
-          <rect x="590" y="120" width="150" height="50" rx="10" class="n"></rect>
-          <text x="613" y="150" class="tx svg-zh">大店长(2-3家)</text>
-          <text x="596" y="150" class="tx svg-ru">Старший (2-3 точки)</text>
-
-          <rect x="765" y="120" width="120" height="50" rx="10" class="n"></rect>
-          <text x="797" y="150" class="tx svg-zh">合伙人</text>
-          <text x="787" y="150" class="tx svg-ru">Партнёр</text>
-
-          <rect x="910" y="120" width="140" height="50" rx="10" class="n"></rect>
-          <text x="942" y="150" class="tx svg-zh">区域经理</text>
-          <text x="922" y="150" class="tx svg-ru">Региональный менеджер</text>
-
-          <rect x="460" y="250" width="160" height="50" rx="10" class="n"></rect>
-          <text x="498" y="280" class="tx svg-zh">区域合伙人</text>
-          <text x="470" y="280" class="tx svg-ru">Региональный партнёр</text>
-
-          <line x1="140" y1="145" x2="165" y2="145" class="l"></line>
-          <line x1="275" y1="145" x2="300" y2="145" class="l"></line>
-          <line x1="430" y1="145" x2="455" y2="145" class="l"></line>
-          <line x1="565" y1="145" x2="590" y2="145" class="l"></line>
-          <line x1="740" y1="145" x2="765" y2="145" class="l"></line>
-          <line x1="885" y1="145" x2="910" y2="145" class="l"></line>
-
-          <path d="M1048,170 C1068,230 850,280 620,275" class="l"></path>
-          <path d="M460,275 C240,280 60,240 50,170" class="l"></path>
-          <text x="440" y="340" class="title svg-zh">闭环回流：区域合伙人反向培养新一代店长与合伙人</text>
-          <text x="340" y="340" class="title svg-ru">Обратный цикл: региональные партнёры выращивают новое поколение</text>
-        </svg>
+      <div class="lang lang-zh">
+        <div class="summary">人才闭环文字描述：实习 -> 咖啡师 -> 副店长 -> 店主 -> 大店长(2-3店) -> 合伙人 -> 区域经理 -> 区域合伙人；区域合伙人反向培养下一代店长和合伙人，形成持续循环。</div>
+      </div>
+      <div class="lang lang-ru">
+        <div class="summary">Текстовый кадровый цикл: стажёр -> бариста -> зам. управляющего -> управляющий -> старший управляющий (2-3 точки) -> партнёр -> региональный менеджер -> региональный партнёр; региональные партнёры выращивают новое поколение руководителей и партнёров.</div>
+      </div>
+      <div class="lang lang-bi">
+        <div class="summary">人才闭环 / Кадровый цикл：实习 -> 咖啡师 -> 副店长 -> 店主 -> 大店长 -> 合伙人 -> 区域经理 -> 区域合伙人 -> 反向培养。</div>
       </div>
     </section>
 
